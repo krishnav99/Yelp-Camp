@@ -3,13 +3,13 @@ var express = require("express"),
     bodyParser = require("body-parser"),
 	passport = require("passport"),
 	localStrategy = require("passport-local"),
+	flash = require("connect-flash");
 	methodOverride = require("method-override"),
 	Seed = require("./seeds");
 
 var Campground = require("./models/campground"),
 	Comment   = require("./models/comment"),
 	User = require("./models/user");
-
 var campgroundsRoutes	= require("./routes/campgrounds"),
 	commentsRoutes 		= require("./routes/comments"),
 	indexRoutes			= require("./routes/index");
@@ -28,7 +28,8 @@ var campgroundsRoutes	= require("./routes/campgrounds"),
 	app.set("view engine", "ejs");
 	app.use(express.static(__dirname + "/public"));
 	app.use(methodOverride("_method"));
-	
+	app.use(flash());
+
 	//PASSPORT CONFIG
 	app.use(require("express-session")({
 		secret: "secret",
@@ -43,6 +44,8 @@ var campgroundsRoutes	= require("./routes/campgrounds"),
 	
 	app.use(function(req, res, next){
 		res.locals.currentUser = req.user;
+		res.locals.error = req.flash("error");
+		res.locals.success = req.flash("success");
 		next();
 	})
 	

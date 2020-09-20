@@ -4,7 +4,8 @@ var express = require("express"),
     router = express.Router(),
     middleware = require("../middleware"),
     Campground = require("../models/campground");
-    
+
+//INDEX ROUTE
 router.get("/campgrounds",function(req,res){
     // get Campground data from db
     Campground.find({},function(err,allCampgrounds){
@@ -19,10 +20,12 @@ router.get("/campgrounds",function(req,res){
     
 })
 
+//NEW ROUTE
 router.get("/campgrounds/new", middleware.isLoggedIn, function(req,res){
     res.render("campgrounds/newform");
 });
 
+//CREATE ROUTE
 router.post("/campgrounds", middleware.isLoggedIn, function(req,res){
     var name=req.body.name;
     var image=req.body.image;
@@ -39,16 +42,16 @@ router.post("/campgrounds", middleware.isLoggedIn, function(req,res){
         else{
             console.log(req.user.username);
             console.log("new campground added to db");
+            req.flash("success","Campground Created!")
             res.redirect("/campgrounds");
         }
     })
 });
 
-
+//SHOW ROUTE
 router.get("/campgrounds/:id",function(req,res){
     Campground.findById(req.params.id).populate("comments").exec(function(err,foundCampground){
         if(err){
-            console.log("something went wrong");
             console.log(err);
         }
         else{
@@ -68,8 +71,10 @@ router.get("/campgrounds/:id/edit", middleware.checkCampgroundOwnership, functio
 router.put("/campgrounds/:id", middleware.checkCampgroundOwnership, function(req, res){
     Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground){
         if(err){
+            req.flash("error", "There was an error")
             return res.redirect("/campgrounds");
         }
+        req.flash("success", "Campground edited");
         res.redirect("/campgrounds/"+req.params.id);
     })
 })
@@ -79,6 +84,7 @@ router.delete("/campgrounds/:id", middleware.checkCampgroundOwnership, function(
     Campground.findByIdAndRemove(req.params.id, function(err){
         if(err)
             return res.redirect("/campgrounds");
+        req.flash("success","Campground deleted!");
         res.redirect("/campgrounds");
     });
 })

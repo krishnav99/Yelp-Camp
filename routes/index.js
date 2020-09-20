@@ -9,10 +9,12 @@ router.get("/",function(req,res){
     res.render("home");
 });
 
+//NEW ROUTE FOR USER
 router.get("/register", function(req, res){
 	res.render("register");
 })
 
+//CREATE ROUTE FOR USER
 router.post("/register", function(req, res){
 	var newUser = new User({username: req.body.username});
 	User.register(newUser, req.body.password, function(err, user){
@@ -21,6 +23,7 @@ router.post("/register", function(req, res){
 			return res.render("register");
 		}
 		passport.authenticate("local")(req, res, function(){
+			req.flash("success", "Succesfully Registered")
 			res.redirect("/campgrounds");
 		});
 	});
@@ -31,7 +34,9 @@ router.get("/login", function(req, res){
 	res.render("login");
 })
 
+
 router.post("/login", passport.authenticate("local", {
+	successFlash: "Welcome!",
 	successRedirect: "/campgrounds",
 	failureRedirect: "/login"
 }), function(req, res){})
@@ -39,6 +44,7 @@ router.post("/login", passport.authenticate("local", {
 //logout route
 router.get("/logout", function(req, res){
 	req.logout();
+	req.flash("success","Logged out");
 	res.redirect("/campgrounds")
 })
 

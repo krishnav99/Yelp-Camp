@@ -4,9 +4,11 @@ var express = require("express"),
 	Campground = require("../models/campground"),
     Comment = require("../models/comment"); 
 
+//NEW ROUTE FOR COMMENT
 router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req,res){
 	Campground.findById(req.params.id,function(err,campground){
 		if(err){
+			req.flash("error", "Something went wrong!")
 			console.log(err);
 		}
 		else{
@@ -15,11 +17,11 @@ router.get("/campgrounds/:id/comments/new", middleware.isLoggedIn, function(req,
 	});
 });
 
-// post route of 
+// CREATE ROUTE FOR COMMENT
 router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req,res){
 	Campground.findById(req.params.id,function(err,campground){
 		if(err){
-			console.log(err);
+			req.flash("error", "Something went wrong!")
 			res.redirect("back");
 		}
 		else{
@@ -42,7 +44,7 @@ router.post("/campgrounds/:id/comments", middleware.isLoggedIn, function(req,res
 router.get("/campgrounds/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
 	Campground.findById(req.params.id, function(err, foundCanpground){
 		if(err){
-			console.log(err);
+			req.flash("error", "Something went wrong!")
 			res.redirect("back");
 		}
 		else{
