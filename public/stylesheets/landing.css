@@ -1,0 +1,88 @@
+body {
+    background-color: #000;
+}
+
+#landing-header{
+    z-index:1;
+    position: relative;
+    text-align: center;
+    padding-top: 40vh;
+}
+
+h1{
+    color: white;
+    text-shadow: 0px 4px 8px rgba(0,0,0,0.8),
+				 0px 8px 13px rgba(0,0,0,0.5),
+				 0px 18px 23px rgba(0,0,0,0.3);
+}
+
+.btn{
+    opacity: 0.8;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.5),
+                0px 8px 13px rgba(0,0,0,0.2),
+                0px 18px 23px rgba(0,0,0,0.1);
+}
+.slideshow{
+    position: fixed;
+    width:100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+li{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    animation: imageAnimation 50s linear infinite;
+}
+
+.slideshow li:nth-child(1){
+    background-image: url(https://wallpaperaccess.com/download/campsite-181130);
+   
+}
+.slideshow li:nth-child(2){
+    background-image: url(https://wallpaperaccess.com/download/campsite-181076);
+    animation-delay: 10s;
+}
+.slideshow li:nth-child(3){
+    background-image: url(https://images5.alphacoders.com/555/thumb-1920-555700.jpg);
+    animation-delay: 20s;
+}
+.slideshow li:nth-child(4){
+    background-image: url(https://wallpaperaccess.com/download/campsite-174372);
+    animation-delay: 30s;
+}
+.slideshow li:nth-child(5){
+    background-image: url(https://cdn.hiconsumption.com/wp-content/uploads/2019/07/Best-Affordable-Camping-Gear-000-Hero.jpg);
+    animation-delay: 40s;
+}
+
+@keyframes imageAnimation { 
+    0% { 
+      opacity: 0; 
+      animation-timing-function: ease-in;
+    }
+    10% {
+      opacity: 1;
+      animation-timing-function: ease-out;
+    }
+    20% {
+      opacity: 1
+    }
+    30% {
+      opacity: 0
+    }
+  }
+  
