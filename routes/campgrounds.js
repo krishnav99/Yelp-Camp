@@ -34,7 +34,8 @@ router.post("/campgrounds", middleware.isLoggedIn, function(req,res){
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground={name:name,image:image,description:description, author:author};
+    var newCampground = req.body.campground;
+    newCampground.author = {id: req.user._id, username: req.user.username};
     Campground.create(newCampground,function(err,newcampground){
         if(err){
             console.log(err);
