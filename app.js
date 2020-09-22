@@ -7,6 +7,8 @@ var express = require("express"),
 	methodOverride = require("method-override"),
 	Seed = require("./seeds");
 
+var port = process.env.PORT || 3000;
+
 var Campground = require("./models/campground"),
 	Comment   = require("./models/comment"),
 	User = require("./models/user");
@@ -54,7 +56,7 @@ var campgroundsRoutes	= require("./routes/campgrounds"),
 	app.use(campgroundsRoutes);
 	app.use(commentsRoutes);
 
-app.listen("3000", function(){
+app.listen(port, function(){
     console.log("The Server is running");
 })
 
